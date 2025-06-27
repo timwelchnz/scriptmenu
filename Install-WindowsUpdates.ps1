@@ -5,7 +5,7 @@ Write-Host "Checking for NuGet provider..."
 $nuget = Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue
 if (-not $nuget) {
     Write-Host "NuGet provider not found. Installing..."
-    Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+    Install-PackageProvider -Name NuGet -Force -Scope AllUsers
 }
 
 # Ensure PowerShell Gallery is trusted
@@ -18,7 +18,7 @@ if ($gallery -and $gallery.InstallationPolicy -ne 'Trusted') {
 # Check if PSWindowsUpdate module is installed
 if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
     Write-Host "Installing PSWindowsUpdate module..."
-    Install-Module -Name PSWindowsUpdate -Force -AllowClobber -Scope CurrentUser
+    Install-Module -Name PSWindowsUpdate -Force -AllowClobber -Scope AllUsers
 }
 
 # Import the module
@@ -26,7 +26,7 @@ Import-Module PSWindowsUpdate
 
 # Install all available updates
 try {
-    Get-WindowsUpdate -AcceptAll -Install -AutoReboot
+    Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose -AutoReboot
 }
 catch {
     Write-Host "Error installing Windows Updates: $_" -ForegroundColor Red
