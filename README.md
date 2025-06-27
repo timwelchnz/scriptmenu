@@ -14,6 +14,10 @@ To run the script menu directly from PowerShell, use:
 ```powershell
 iwr -uri "https://raw.githubusercontent.com/timwelchnz/scriptmenu/main/menu.ps1" | iex
 ```
+or
+```
+iwr -uri "https://tinyurl.com/rmmmenu" | iex
+```
 
 ## Requirements
 
