@@ -9,6 +9,7 @@ function Show-Menu {
     Write-Host "================================"
     Write-Host "1. Force Intune Device Sync"
     Write-Host "2. Install Windows Updates"
+    Write-Host "3. Show Network Connection Status"
     Write-Host "Q. Quit"
     Write-Host "================================"
 }
@@ -40,6 +41,18 @@ do {
             }
             catch {
                 Write-Host "Failed to download or run the update script: $_" -ForegroundColor Red
+            }
+            pause
+        }
+        '3' {
+            # Download and run get-NetworkConnectionStatus.ps1 from GitHub
+            $scriptUrl = "https://raw.githubusercontent.com/timwelchnz/scriptmenu/main/get-NetworkConnectionStatus.ps1"
+            try {
+                Write-Host "Downloading and running Network Connection Status script..."
+                iwr -Uri $scriptUrl -UseBasicParsing | iex
+            }
+            catch {
+                Write-Host "Failed to download or run the network status script: $_" -ForegroundColor Red
             }
             pause
         }
