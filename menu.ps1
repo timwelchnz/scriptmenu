@@ -2,6 +2,8 @@
 # Author: Tim Welch
 # Created: June 28, 2025
 
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
 function Show-Menu {
     Clear-Host
     Write-Host "================================"

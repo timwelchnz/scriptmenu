@@ -1,11 +1,12 @@
 # Install-WindowsUpdates.ps1
 # Downloads and installs all available Windows Updates using PSWindowsUpdate
 
+$ProgressPreference = 'SilentlyContinue'
 Write-Host "Checking for NuGet provider..."
 $nuget = Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue
 if (-not $nuget) {
     Write-Host "NuGet provider not found. Installing..."
-    Install-PackageProvider -Name NuGet -Force -Scope AllUsers
+    Install-PackageProvider -Name NuGet -Force -Confirm:$false -Scope AllUsers
 }
 
 # Ensure PowerShell Gallery is trusted
@@ -24,9 +25,17 @@ if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
 # Import the module
 Import-Module PSWindowsUpdate
 
+# Ask user if auto reboot should be enabled
+$autoReboot = Read-Host "Automatically reboot after installing updates? (y/N)"
+$useAutoReboot = $autoReboot -match '^(y|yes)$' -i
+
 # Install all available updates
 try {
-    Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose -AutoReboot
+    if ($useAutoReboot) {
+        Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose -AutoReboot
+    } else {
+        Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose
+    }
 }
 catch {
     Write-Host "Error installing Windows Updates: $_" -ForegroundColor Red
