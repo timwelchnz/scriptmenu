@@ -27,7 +27,7 @@ Import-Module PSWindowsUpdate
 
 # Ask user if auto reboot should be enabled
 $autoReboot = Read-Host "Automatically reboot after installing updates? (y/N)"
-$useAutoReboot = $autoReboot -match '^(y|yes)$' -i
+$useAutoReboot = $autoReboot -match '^(y|yes)$'
 
 # Install all available updates
 try {
