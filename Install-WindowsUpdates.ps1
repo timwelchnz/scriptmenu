@@ -25,17 +25,9 @@ if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
 # Import the module
 Import-Module PSWindowsUpdate
 
-# Ask user if auto reboot should be enabled
-$autoReboot = Read-Host "Automatically reboot after installing updates? (y/N)"
-$useAutoReboot = $autoReboot -match '^(y|yes)$'
-
 # Install all available updates
 try {
-    if ($useAutoReboot) {
-        Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose -AutoReboot
-    } else {
-        Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose
-    }
+    Get-WindowsUpdate -MicrosoftUpdate -AcceptAll -Install -Verbose
 }
 catch {
     Write-Host "Error installing Windows Updates: $_" -ForegroundColor Red

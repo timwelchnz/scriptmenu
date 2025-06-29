@@ -27,7 +27,16 @@ do {
             $scriptUrl = "https://raw.githubusercontent.com/timwelchnz/scriptmenu/main/Force-IntuneSync.ps1"
             try {
                 Write-Host "Downloading and running Intune Sync script..."
-                iwr -Uri $scriptUrl -UseBasicParsing | iex
+                try {
+                    iwr -Uri $scriptUrl | iex
+                } catch {
+                    if ($_.Exception -match 'UseBasicParsing') {
+                        Write-Host "Retrying with -UseBasicParsing..."
+                        iwr -Uri $scriptUrl -UseBasicParsing | iex
+                    } else {
+                        throw $_
+                    }
+                }
             }
             catch {
                 Write-Host "Failed to download or run the Intune sync script: $_" -ForegroundColor Red
@@ -39,7 +48,16 @@ do {
             $scriptUrl = "https://raw.githubusercontent.com/timwelchnz/scriptmenu/main/Install-WindowsUpdates.ps1"
             try {
                 Write-Host "Downloading and running Windows Update script..."
-                iwr -Uri $scriptUrl -UseBasicParsing | iex
+                try {
+                    iwr -Uri $scriptUrl | iex
+                } catch {
+                    if ($_.Exception -match 'UseBasicParsing') {
+                        Write-Host "Retrying with -UseBasicParsing..."
+                        iwr -Uri $scriptUrl -UseBasicParsing | iex
+                    } else {
+                        throw $_
+                    }
+                }
             }
             catch {
                 Write-Host "Failed to download or run the update script: $_" -ForegroundColor Red
@@ -51,7 +69,16 @@ do {
             $scriptUrl = "https://raw.githubusercontent.com/timwelchnz/scriptmenu/main/get-NetworkConnectionStatus.ps1"
             try {
                 Write-Host "Downloading and running Network Connection Status script..."
-                iwr -Uri $scriptUrl -UseBasicParsing | iex
+                try {
+                    iwr -Uri $scriptUrl | iex
+                } catch {
+                    if ($_.Exception -match 'UseBasicParsing') {
+                        Write-Host "Retrying with -UseBasicParsing..."
+                        iwr -Uri $scriptUrl -UseBasicParsing | iex
+                    } else {
+                        throw $_
+                    }
+                }
             }
             catch {
                 Write-Host "Failed to download or run the network status script: $_" -ForegroundColor Red
