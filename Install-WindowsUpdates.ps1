@@ -3,11 +3,8 @@
 
 $ProgressPreference = 'SilentlyContinue'
 Write-Host "Checking for NuGet provider..."
-$nuget = Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue
-if (-not $nuget) {
-    Write-Host "NuGet provider not found. Installing..."
-    Install-PackageProvider -Name NuGet -Force -Confirm:$false -Scope AllUsers
-}
+
+Get-PackageProvider -Name NuGet -ForceBootstrap
 
 # Ensure PowerShell Gallery is trusted
 $gallery = Get-PSRepository -Name 'PSGallery' -ErrorAction SilentlyContinue
